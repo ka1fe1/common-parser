@@ -7,12 +7,19 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/signing"
 	"github.com/tendermint/tendermint/types"
+	"github.com/tharsis/ethermint/encoding"
 )
 
 var (
 	AppModules []module.AppModuleBasic
 	Encodecfg  params.EncodingConfig
 )
+
+// MakeEncodingConfig 初始化账户地址前缀
+func MakeEncodingConfig() {
+	moduleBasics := module.NewBasicManager(AppModules...)
+	Encodecfg = encoding.MakeConfig(moduleBasics)
+}
 
 func GetTxDecoder() sdk.TxDecoder {
 	return Encodecfg.TxConfig.TxDecoder()
