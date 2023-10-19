@@ -26,7 +26,7 @@ func GetTxDecoder() sdk.TxDecoder {
 }
 
 func GetMarshaler() codec.Codec {
-	return Encodecfg.Marshaler
+	return Encodecfg.Codec
 }
 
 func GetSigningTx(txBytes types.Tx) (signing.Tx, error) {
