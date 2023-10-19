@@ -1,24 +1,26 @@
 package codec
 
 import (
+	"github.com/cometbft/cometbft/types"
+	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/cosmos/cosmos-sdk/simapp/params"
+	ctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	"github.com/cosmos/cosmos-sdk/x/auth/signing"
-	"github.com/tendermint/tendermint/types"
-	"github.com/tharsis/ethermint/encoding"
 )
 
 var (
 	AppModules []module.AppModuleBasic
-	Encodecfg  params.EncodingConfig
+	Encodecfg  EncodingConfig
 )
 
-// MakeEncodingConfig 初始化账户地址前缀
-func MakeEncodingConfig() {
-	moduleBasics := module.NewBasicManager(AppModules...)
-	Encodecfg = encoding.MakeConfig(moduleBasics)
+type EncodingConfig struct {
+	InterfaceRegistry ctypes.InterfaceRegistry
+	// NOTE: this field will be renamed to Codec
+	Marshaler codec.Codec
+	TxConfig  client.TxConfig
+	Amino     *codec.LegacyAmino
 }
 
 func GetTxDecoder() sdk.TxDecoder {
@@ -26,7 +28,7 @@ func GetTxDecoder() sdk.TxDecoder {
 }
 
 func GetMarshaler() codec.Codec {
-	return Encodecfg.Codec
+	return Encodecfg.Marshaler
 }
 
 func GetSigningTx(txBytes types.Tx) (signing.Tx, error) {
