@@ -17,10 +17,9 @@ var (
 
 type EncodingConfig struct {
 	InterfaceRegistry ctypes.InterfaceRegistry
-	// NOTE: this field will be renamed to Codec
-	Marshaler codec.Codec
-	TxConfig  client.TxConfig
-	Amino     *codec.LegacyAmino
+	Codec             codec.Codec
+	TxConfig          client.TxConfig
+	Amino             *codec.LegacyAmino
 }
 
 func GetTxDecoder() sdk.TxDecoder {
@@ -28,7 +27,7 @@ func GetTxDecoder() sdk.TxDecoder {
 }
 
 func GetMarshaler() codec.Codec {
-	return Encodecfg.Marshaler
+	return Encodecfg.Codec
 }
 
 func GetSigningTx(txBytes types.Tx) (signing.Tx, error) {
