@@ -1,5 +1,5 @@
 package types
 
-import "github.com/cosmos/cosmos-sdk/simapp/params"
+import "github.com/kaifei-bianjie/common-parser/codec"
 
-type EncodingConfig params.EncodingConfig
+type EncodingConfig codec.EncodingConfig
